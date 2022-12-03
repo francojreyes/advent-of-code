@@ -1,1 +1,7 @@
+# Input files
 **/*.in
+
+# C executables
+**/part1
+**/part2
+**/*.dSYM
