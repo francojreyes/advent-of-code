@@ -4,3 +4,4 @@
 - **Day 01: Counting Calories** solved in Python
 - **Day 02: Rock Paper Scissors** solved in Python
 - **Day 03: Rucksack Reorganization** solved in C
+- **Day 04: Camp Cleanup** solved in Java

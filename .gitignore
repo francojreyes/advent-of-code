@@ -1,10 +1,13 @@
 # Input files
 **/*.in
 
-# C executables
+# C stuff
 **/part1
 **/part2
 **/*.dSYM
+
+# Java stuff
+**/*.class
 
 # VSCode shit
 .vscode
