@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-public class Day5 {
+public class Solution {
 
     public static List<Stack<Character>> readStacks(Scanner scanner) {
         List<Stack<Character>> stacks = new ArrayList<>();
