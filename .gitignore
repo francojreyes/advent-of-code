@@ -9,5 +9,9 @@
 # Java stuff
 **/*.class
 
+# TS Stuff
+**/node_modules
+**/dist
+
 # VSCode shit
 .vscode

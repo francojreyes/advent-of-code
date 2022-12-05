@@ -5,3 +5,4 @@
 - **Day 02: Rock Paper Scissors** solved in Python
 - **Day 03: Rucksack Reorganization** solved in C
 - **Day 04: Camp Cleanup** solved in Java
+- **Day 04: Supply Stacks** solved in Java
