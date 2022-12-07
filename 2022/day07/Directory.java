@@ -26,6 +26,10 @@ public class Directory implements Inode {
         files.put(inode.getName(), inode);
     }
 
+    public Inode getChild(String name) {
+        return files.get(name);
+    }
+
     public Map<String, Inode> getChildren() {
         return files;
     }

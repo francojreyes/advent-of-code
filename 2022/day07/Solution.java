@@ -26,7 +26,7 @@ public class Solution {
                         case "..":
                             cwd = cwd.getParent(); break;
                         default:
-                            cwd = (Directory) cwd.getChildren().get(line[2]);
+                            cwd = (Directory) cwd.getChild(line[2]);
                     }
                     break;
                 case "dir":
