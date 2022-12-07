@@ -7,3 +7,4 @@
 - **Day 04: Camp Cleanup** solved in Java
 - **Day 05: Supply Stacks** solved in Java
 - **Day 06: Tuning Trouble** solved in C
+- **Day 07: No Space Left On Device** solved in Java
