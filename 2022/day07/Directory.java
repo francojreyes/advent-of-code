@@ -7,7 +7,8 @@ public class Directory implements Inode {
     private String name;
     Map<String, Inode> files = new HashMap<>();
 
-    public Directory(String name) {
+    public Directory(Directory parent, String name) {
+        this.parent = parent;
         this.name = name;
     }
     
@@ -21,20 +22,12 @@ public class Directory implements Inode {
         return files.values().stream().mapToInt(Inode::getSize).sum();
     }
 
-    @Override
     public void addChild(Inode inode) {
         files.put(inode.getName(), inode);
-        inode.setParent(this);
     }
 
-    @Override
     public Map<String, Inode> getChildren() {
         return files;
-    }
-
-    @Override
-    public void setParent(Directory parent) {
-        this.parent = parent;
     }
 
     @Override

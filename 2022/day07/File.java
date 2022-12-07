@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.Map;
 
 public class File implements Inode {
     
@@ -7,7 +5,8 @@ public class File implements Inode {
     private String name;
     private int size;
 
-    public File(String name, int size) {
+    public File(Directory parent, String name, int size) {
+        this.parent = parent;
         this.name = name;
         this.size = size;
     }
@@ -20,20 +19,6 @@ public class File implements Inode {
     @Override
     public int getSize() {
         return size;
-    }
-    @Override
-    public void addChild(Inode inode) {
-        return;
-    }
-
-    @Override
-    public Map<String, Inode> getChildren() {
-        return new HashMap<>();
-    }
-
-    @Override
-    public void setParent(Directory parent) {
-        this.parent = parent;        
     }
 
     @Override

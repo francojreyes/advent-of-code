@@ -4,12 +4,14 @@ import java.util.Scanner;
 
 public class Solution {
 
+    public static int MAX_SIZE = 100000;
+
     public static int AVAILABLE = 70000000;
     public static int REQUIRED = 30000000;
 
     public static Directory readInput() {
-        Directory root = new Directory("/");
-        Inode cwd = root;
+        Directory root = new Directory(null, "/");
+        Directory cwd = root;
 
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
@@ -24,13 +26,13 @@ public class Solution {
                         case "..":
                             cwd = cwd.getParent(); break;
                         default:
-                            cwd = cwd.getChildren().get(line[2]);
+                            cwd = (Directory) cwd.getChildren().get(line[2]);
                     }
                     break;
                 case "dir":
-                    cwd.addChild(new Directory(line[1])); break;
+                    cwd.addChild(new Directory(cwd, line[1])); break;
                 default:
-                    cwd.addChild( new File(line[1], Integer.parseInt(line[0]))); break;
+                    cwd.addChild(new File(cwd, line[1], Integer.parseInt(line[0]))); break;
             }
         }
         scanner.close();
@@ -45,7 +47,7 @@ public class Solution {
         while (!q.isEmpty()) {
             Directory dir = q.poll();
             int size = dir.getSize();
-            if (size <= 100000) {
+            if (size <= MAX_SIZE) {
                 sum += size;
             }
 
@@ -68,16 +70,15 @@ public class Solution {
         int ceil = AVAILABLE;
         while (!q.isEmpty()) {
             Directory dir = q.poll();
+            int size = dir.getSize();
+            if (size < toDelete) continue;
+            if (size < ceil) {
+                ceil = size;
+            }
+
             for (Inode inode : dir.getChildren().values()) {
                 if (inode instanceof Directory) {
-                    Directory child = (Directory) inode;
-                    int size = child.getSize();
-                    if (size >= toDelete) {
-                        if (size < ceil) {
-                            ceil = size;
-                        }
-                        q.add((Directory) inode);
-                    }
+                    q.add((Directory) inode);
                 }
             }
         }
