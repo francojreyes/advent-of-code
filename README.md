@@ -9,3 +9,4 @@
 - **Day 06: Tuning Trouble** solved in C
 - **Day 07: No Space Left On Device** solved in Java
 - **Day 08: Treetop Tree House** solved in Python
+- **Day 09: Rope Bridge** solved in Python
