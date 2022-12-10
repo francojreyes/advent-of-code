@@ -10,3 +10,5 @@
 - **Day 07: No Space Left On Device** solved in Java
 - **Day 08: Treetop Tree House** solved in Python
 - **Day 09: Rope Bridge** solved in Python
+- **Day 10: Cathode-Ray Tube** solved in C
+
