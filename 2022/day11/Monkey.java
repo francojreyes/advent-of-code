@@ -1,20 +1,19 @@
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 public class Monkey {
     private Queue<Item> items = new LinkedList<>();
     private UnaryOperator<Integer> operation;
-    private Predicate<Integer> test;
+    private int mod;
     private int ifTrue;
     private int ifFalse;
-    private int inspected = 0;
+    private long inspected = 0;
 
-    public Monkey(UnaryOperator<Integer> operation, Predicate<Integer> test, int ifTrue, int ifFalse) {
+    public Monkey(UnaryOperator<Integer> operation, int mod, int ifTrue, int ifFalse) {
         this.operation = operation;
-        this.test = test;
+        this.mod = mod;
         this.ifTrue = ifTrue;
         this.ifFalse = ifFalse;
     }
@@ -32,14 +31,14 @@ public class Monkey {
         inspected++;
         item.inspect(operation);
 
-        if (test.test(item.getWorry())) {
+        if (item.getWorry(mod) == 0) {
             monkeys.get(ifTrue).addItem(item);
         } else {
             monkeys.get(ifFalse).addItem(item);
         }
     }
 
-    public int getInspected() {
+    public long getInspected() {
         return inspected;
     }
     

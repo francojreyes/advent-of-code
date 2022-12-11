@@ -11,4 +11,4 @@
 - **Day 08: Treetop Tree House** solved in Python
 - **Day 09: Rope Bridge** solved in Python
 - **Day 10: Cathode-Ray Tube** solved in C
-
+- **Day 11: Monkey in the Middle** solved in Java

@@ -3,11 +3,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-public class Solution {
+public class Part1 {
 
     private static final int NUM_ROUNDS = 20;
 
@@ -24,10 +23,10 @@ public class Solution {
 
             // Items
             line = scanner.nextLine();
-            List<Item> items = Arrays.asList(line.strip().replace("Starting items: ", "").split(", "))
+            List<Part1Item> items = Arrays.asList(line.strip().replace("Starting items: ", "").split(", "))
                     .stream()
                     .map(Integer::parseInt)
-                    .map(Item::new)
+                    .map(Part1Item::new)
                     .collect(Collectors.toList());
             
             // Operation
@@ -59,7 +58,6 @@ public class Solution {
             line = scanner.nextLine();
             split = line.split("\\s+");
             int base = Integer.parseInt(split[split.length - 1]);
-            Predicate<Integer> test = i -> i % base == 0;
 
             // Throw if true
             line = scanner.nextLine();
@@ -71,7 +69,7 @@ public class Solution {
             split = line.split("\\s+");
             int ifFalse = Integer.parseInt(split[split.length - 1]);
 
-            Monkey monkey = new Monkey(operation, test, ifTrue, ifFalse);
+            Monkey monkey = new Monkey(operation, base, ifTrue, ifFalse);
             items.forEach(monkey::addItem);
             monkeys.add(monkey);
 
@@ -94,7 +92,7 @@ public class Solution {
             }
         }
 
-        List<Integer> inspections = monkeys
+        List<Long> inspections = monkeys
                 .stream()
                 .map(Monkey::getInspected)
                 .collect(Collectors.toList());
