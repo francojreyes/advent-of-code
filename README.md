@@ -12,3 +12,4 @@
 - **Day 09: Rope Bridge** solved in Python
 - **Day 10: Cathode-Ray Tube** solved in C
 - **Day 11: Monkey in the Middle** solved in Java
+- **Day 12: Monkey in the Middle** solved in Python
