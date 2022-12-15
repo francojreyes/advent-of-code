@@ -4,11 +4,11 @@ from sys import stdin
 def read_input():
     rocks = []
     for line in stdin:
-        endpoints = [tuple(map(int,coord.split(","))) for coord in line.strip().split(" -> ")]
-        for i in range(len(endpoints) - 1):
-            rocks.extend(positions_between(endpoints[i], endpoints[i + 1]))
-        rocks.append(endpoints[-1])
-    return rocks
+        corners = [tuple(map(int,coord.split(","))) for coord in line.strip().split(" -> ")]
+        for i in range(len(corners) - 1):
+            rocks.extend(positions_between(corners[i], corners[i + 1]))
+        rocks.append(corners[-1])
+    return set(rocks) # significantly more efficient as a set, 10s to 0.08s
 
 
 def positions_between(start, end):
@@ -51,38 +51,35 @@ def next_sand(entities, bottom):
 
 
 def part1(entities):
+    num_rocks = len(entities)
     lowest_rock = max(x[1] for x in entities)
-    num_sand = 0
     while True:
         pos = next_sand(entities, lowest_rock)
         if pos[1] == lowest_rock:
             break
-        else:
-            print(pos)
-            entities.append(pos)
-            num_sand += 1
-    print(num_sand)
+        entities.add(pos)
+    return len(entities) - num_rocks
 
 
 def part2(entities):
+    num_rocks = len(entities)
     floor = max(x[1] for x in entities) + 2
+
     q = [(500, 0)]
-    entities = set(entities) # for efficiency
-    num_sand = 0
     while q: # kinda BFS?
         pos = q.pop()
         if pos in entities or pos[1] == floor:
             continue
-        else:
-            entities.add(pos)
-            num_sand += 1
+        entities.add(pos)
         
         q.append((pos[0], pos[1] + 1))
         q.append((pos[0] - 1, pos[1] + 1))
         q.append((pos[0] + 1, pos[1] + 1))
-    print(num_sand)
+
+    return len(entities) - num_rocks
 
 
 if __name__ == '__main__':
     entities = read_input()
-    part2(entities)  
+    print("Part 1:", part1(entities.copy()))
+    print("Part 2:", part2(entities.copy()))
