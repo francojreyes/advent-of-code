@@ -76,5 +76,6 @@ def part1(sensors, row):
 
 if __name__ == "__main__":
     sensors = read_input()
-    print("Part 1:", part1(sensors, 2000000))
-    print("Part 2:", part2(sensors, 4000000))
+    N = 4000000 # sample uses 20, problem uses 4000000
+    print("Part 1:", part1(sensors, N // 2))
+    print("Part 2:", part2(sensors, N))
