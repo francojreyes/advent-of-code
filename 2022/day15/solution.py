@@ -1,6 +1,6 @@
-from collections import defaultdict
 import re
 from sys import stdin
+from z3 import If, Int, Solver
 
 
 REGEX = r"Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)"
@@ -39,16 +39,21 @@ def union_of_intervals(intervals):
 
 
 def part2(sensors, bound):
-    for row in range(bound + 1):
-        intervals = []
-        for sensor, beacon in sensors.items():
-            d = dist(sensor, beacon)
-            interval = interval_covered_in_row(sensor, d, row)
-            if interval:
-                intervals.append(interval)
-        intervals = union_of_intervals(intervals)
-        if (len(intervals) > 1):
-            return (intervals[0][1] + 1) * 4000000 + row
+    s = Solver()
+    x = Int('x')
+    y = Int('y')
+    s.add(x > 0, x <= bound, y > 0, y <= bound)
+
+    def abs(x):
+        return If(x >= 0,x,-x)
+
+    for sensor, beacon in sensors.items():
+        s.add(abs(sensor[0] - x) + abs(sensor[1] - y) > dist(sensor, beacon))
+    
+    if not s.check():
+        return None
+    sol = s.model()
+    return sol[x].as_long() * 4000000 + sol[y].as_long()
 
 
 def part1(sensors, row):
