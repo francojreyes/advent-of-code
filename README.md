@@ -18,4 +18,4 @@
 - **Day 15: [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15)** solved in Python
 - **Day 16: [Proboscidea Volcanium](https://adventofcode.com/2022/day/16)** attempted in Java
 - **Day 17: [Pyroclastic Flow](https://adventofcode.com/2022/day/17)** attempted in Python
-- **Day 17: [Boiling Boulders](https://adventofcode.com/2022/day/17)** attempted in Java
+- **Day 17: [Boiling Boulders](https://adventofcode.com/2022/day/17)** solved in Java

@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -14,6 +15,10 @@ public class Droplet {
     private Map<Cube, Integer> surfaceAreas = new HashMap<>();
     private Map<Cube, List<Cube>> sets = new HashMap<>();
 
+    private int xBound = 0;
+    private int yBound = 0;
+    private int zBound = 0;
+
     public void addCube(Cube c) {
         // Create a new set for this cube
         labels.put(c, c);
@@ -21,6 +26,10 @@ public class Droplet {
         sets.put(c, new LinkedList<>() {{
             add(c);
         }});
+
+        if (c.getX() > xBound) xBound = c.getX();
+        if (c.getY() > yBound) yBound = c.getY();
+        if (c.getZ() > zBound) zBound = c.getZ();
 
         // Find the number and label of attached sets
         Set<Cube> attached = new HashSet<>();
@@ -39,13 +48,11 @@ public class Droplet {
             mergeTarget = merge(mergeTarget, label);
         }
         surfaceAreas.put(mergeTarget, mergedSurfaceArea);
-        // System.out.println(mergeTarget + " now has SA " + surfaceAreas.get(mergeTarget));
     }
 
     // Merge the set with label s and the set with label t
     // Return the label of the set that was merged into
     private Cube merge(Cube s, Cube t) {
-        // System.out.println("Merging " + s + " and " + t);
         // Assign the smaller to src and the larger to dest
         Cube src = sets.get(s).size() < sets.get(t).size() ? s : t;
         Cube dest = src == s ? t : s;
@@ -66,4 +73,35 @@ public class Droplet {
     public int getSurfaceArea() {
         return surfaceAreas.values().stream().reduce(0, Integer::sum);
     }
+
+    // BFS through space and find all outward facing cubes
+    public int getExternalSurfaceArea() {
+        int surfaceArea = 0;
+        Set<Cube> visited = new HashSet<>();
+        Queue<Cube> q = new LinkedList<>();
+        q.add(new Cube(-1, -1, -1));
+        while (!q.isEmpty()) {
+            Cube c = q.poll();
+            for (Cube adj : c.adjacentCubes()) {
+                if (containsCube(adj)) {
+                    surfaceArea++;
+                } else if (inBounds(adj) && !visited.contains(adj)) {
+                    q.add(adj);
+                    visited.add(adj);
+                }
+            }
+        }
+        return surfaceArea;
+    }
+
+    public boolean containsCube(Cube c) {
+        return labels.containsKey(c);
+    }
+
+    public boolean inBounds(Cube c) {
+        return -1 <= c.getX() && c.getX() <= xBound + 1 &&
+               -1 <= c.getY() && c.getY() <= yBound + 1 &&
+               -1 <= c.getZ() && c.getZ() <= zBound + 1;
+    }
+
 }
