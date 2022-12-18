@@ -16,3 +16,5 @@
 - **Day 13: [Distress Signal](https://adventofcode.com/2022/day/13)** solved in Java
 - **Day 14: [Regolith Reservoir](https://adventofcode.com/2022/day/14)** solved in Python
 - **Day 15: [Beacon Exclusion Zone](https://adventofcode.com/2022/day/15)** solved in Python
+- **Day 16: [Proboscidea Volcanium](https://adventofcode.com/2022/day/16)** attempted in Java
+- **Day 17: [Pyroclastic Flor](https://adventofcode.com/2022/day/17)** attempted in Python
