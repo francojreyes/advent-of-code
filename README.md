@@ -21,3 +21,4 @@
 - **Day 18: [Boiling Boulders](https://adventofcode.com/2022/day/18)** solved in Java
 - **Day 19: [Not Enough Minerals](https://adventofcode.com/2022/day/19)** attempted in Python
 - **Day 20: [Grove Positioning System](https://adventofcode.com/2022/day/20)** solved in C
+- **Day 21: [Monkey Math](https://adventofcode.com/2022/day/21)** solved in Python
