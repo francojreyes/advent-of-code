@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,6 +14,7 @@ public class Solver {
 
     private static final int END_ROUND = 10;
 
+    private List<Direction> priority;
     private List<Elf> elves = new ArrayList<>();
     
     public Solver(String input) throws FileNotFoundException {
@@ -29,9 +32,12 @@ public class Solver {
             i++;
         }
         scanner.close();
+        resetPriority();
     }
 
     public int part1() {
+        resetPriority();
+
         // Simulate movement
         for (int i = 0; i < END_ROUND; i++) {
             simulateMovement();
@@ -43,6 +49,8 @@ public class Solver {
     }
 
     public int part2() {
+        resetPriority();
+
         int i = 1;
         while (simulateMovement() != 0) {
             i++;
@@ -57,7 +65,7 @@ public class Solver {
         Map<Position, List<Elf>> proposals = new HashMap<>();
         Set<Position> currPositions = elfPositions();
         for (Elf e : elves) {
-            Position proposed = e.proposeMove(currPositions);
+            Position proposed = e.proposeMove(currPositions, priority);
             if (!proposed.equals(e.getPos())) {
                 proposals.computeIfAbsent(proposed, k -> new ArrayList<>()).add(e);
             }
@@ -71,7 +79,7 @@ public class Solver {
             }
         }
 
-        elves.forEach(Elf::updatePriority);
+        updatePriority();
         return numMoves;
     }
 
@@ -92,6 +100,14 @@ public class Solver {
 
     private Set<Position> elfPositions() {
         return elves.stream().map(Elf::getPos).collect(Collectors.toSet());
+    }
+
+    private void resetPriority() {
+        this.priority = new LinkedList<>(Arrays.asList(Direction.values()));
+    }
+
+    private void updatePriority() {
+        priority.add(priority.remove(0));
     }
 
     public void printElves() {

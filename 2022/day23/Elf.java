@@ -1,18 +1,15 @@
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public class Elf {
 
-    private List<Direction> priority = new LinkedList<>(Arrays.asList(Direction.values())); 
     private Position pos;
 
     public Elf(Position pos) {
         this.pos = pos;
     }
 
-    public Position proposeMove(Set<Position> elves) {
+    public Position proposeMove(Set<Position> elves, List<Direction> priority) {
         // If no other Elves are in one of those eight positions, the Elf does not do anything during this round.
         if (pos.getAdjacentPositions(null).stream().allMatch(p -> !elves.contains(p))) {
             return pos;
@@ -35,10 +32,6 @@ public class Elf {
 
     public void setPos(Position pos) {
         this.pos = pos;
-    }
-
-    public void updatePriority() {
-        priority.add(priority.remove(0));
     }
 
 }
