@@ -23,3 +23,4 @@
 - **Day 20: [Grove Positioning System](https://adventofcode.com/2022/day/20)** solved in C
 - **Day 21: [Monkey Math](https://adventofcode.com/2022/day/21)** solved in Python
 - **Day 22: [Monkey Map](https://adventofcode.com/2022/day/22)** attempted in Python
+- **Day 23: [Unstable Diffusion](https://adventofcode.com/2022/day/23)** solved in Java
