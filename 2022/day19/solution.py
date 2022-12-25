@@ -5,7 +5,7 @@ from sys import stdin
 DELIM = r":|\."
 NUM = r"\d+"
 
-MINUTES = 24
+minutes = 24
 
 def read_input():
     '''
@@ -74,42 +74,68 @@ def visualise(trace, blueprint):
     return inventory["geode"]
 
 
-def quality_level_brute_force(blueprint):
+def max_geodes(blueprint, minutes):
     quality_level = [0]
     trace = []
     quality_level_recursion(
         blueprint,
         {"ore": 1, "clay": 0, "obsidian": 0, "geode": 0},
         {"ore": 0, "clay": 0, "obsidian": 0, "geode": 0},
-        quality_level, 1, trace
+        quality_level, 1, minutes, trace
     )
     return quality_level[0]
 
 
-def quality_level_recursion(blueprint, robots, inventory, quality_level, minute, trace):
-    # If 24 minutes have passed, return
-    if minute > MINUTES:
+def quality_level_recursion(blueprint, robots, inventory, quality_level, minute, minutes, trace):
+    minutes_remaining = minutes - minute + 1
+    # If 24 minutes have passed, calculate quality level
+    if minutes_remaining <= 0:
         if inventory["geode"] > quality_level[0]:
             quality_level[0] = inventory["geode"]
         return
+    
+    # If cant overcome max then return
+    max_possible = inventory["geode"] + minutes_remaining / 2 * (2 * robots["geode"] + minutes_remaining - 1)
+    if max_possible <= quality_level[0]:
+        return
+    
+    # If we did not build a robot last turn but we could have, dont attempt to build it
+    could_build = []
+    if len(trace) > 0 and trace[-1] == None:
+        for mineral in robots:
+            inventory[mineral] -= robots[mineral]
+        for robot in robots:
+            if can_build(robot, blueprint, inventory):
+                could_build.append(robot)
+        for mineral in robots:
+            inventory[mineral] += robots[mineral]
+    
+    if minute == minutes:
+        should_build = []
+    elif minute == minutes - 1:
+        should_build = ["geode"]
+    elif minute == minutes - 2:
+        should_build = ["geode", "obsidian", "ore"]
+    else:
+        should_build = ["geode", "obsidian", "clay", "ore"]
 
     # Determine if a new_robot can be built
-    buildable = []
-    for robot in ["geode", "obsidian", "clay", "ore"]:
-        if can_build(robot, blueprint, inventory):
-            buildable.append(robot)
+    to_build = []
+    for robot in robots:
+        if robot not in could_build and robot in should_build and can_build(robot, blueprint, inventory):
+            to_build.append(robot)
     
     # Robots do their thing
     for mineral in robots:
         inventory[mineral] += robots[mineral]
     
     # Consider producing the new robot
-    for new_robot in buildable:
+    for new_robot in to_build:
         for mineral, amount in blueprint[new_robot].items():
                 inventory[mineral] -= amount
         robots[new_robot] += 1
         trace.append(new_robot)
-        quality_level_recursion(blueprint, robots, inventory, quality_level, minute + 1, trace)
+        quality_level_recursion(blueprint, robots, inventory, quality_level, minute + 1, minutes, trace)
         trace.pop()
         robots[new_robot] -= 1
         for mineral, amount in blueprint[new_robot].items():
@@ -117,17 +143,21 @@ def quality_level_recursion(blueprint, robots, inventory, quality_level, minute,
     
     # Consider not producing a new robot
     trace.append(None)
-    quality_level_recursion(blueprint, robots, inventory, quality_level, minute + 1, trace)
+    quality_level_recursion(blueprint, robots, inventory, quality_level, minute + 1, minutes, trace)
     trace.pop()
     
     # Undo all changes done before backtracking
     for mineral in robots:
         inventory[mineral] -= robots[mineral]
+
+def part1(blueprints):
+    return sum(i * max_geodes(blueprint, 24) for i, blueprint in blueprints.items())
+
+def part2(blueprints):
+    return max_geodes(blueprints[1], 32) * max_geodes(blueprints[2], 32) * max_geodes(blueprints[3], 32)
     
 
 if __name__ == '__main__':
     blueprints = read_input()
-
-    for i in blueprints:
-        print(i, quality_level_brute_force(blueprints[i]))
-    # print(sum(ID * quality_level(blueprint) for ID, blueprint in blueprints.items()))
+    print("Part 1:", part1(blueprints))
+    print("Part 2:", part2(blueprints))
