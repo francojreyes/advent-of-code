@@ -26,3 +26,6 @@
 - **Day 23: [Unstable Diffusion](https://adventofcode.com/2022/day/23)** solved in Java
 - **Day 24: [Blizzard Basin](https://adventofcode.com/2022/day/24)** solved in Python
 - **Day 25: [Full of Hot Air](https://adventofcode.com/2022/day/25)** solved in C
+
+## 2023
+- **Day 01: [Trebuchet?!](https://adventofcode.com/2023/day/1)** solved in Java

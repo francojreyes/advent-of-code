@@ -1,7 +1,7 @@
 from itertools import chain
 
 WIDTH = 7
-N = 100000
+N = 1e12
 
 PATTERNS = [
     [(0, 0), (0, 1), (0, 2), (0, 3)], # -
@@ -55,9 +55,34 @@ if __name__ == '__main__':
     rocks = 0
     jets = 0
     stopped_rocks = set()
+    top_rocks = [0] * WIDTH
     height = 0
-    iterations = []
+
+    seen = {}
+
+    cycle_found = False
     while rocks < N:
+        key = (rocks % len(PATTERNS), jets % len(jet_pattern), *(height - top_rocks[0] for height in top_rocks))
+        if key not in seen:
+            seen[key] = { "rocks": rocks, "height": height }
+        elif not cycle_found:
+            print(key)
+            cycle_found = True
+            cycle_rocks = rocks - seen[key]["rocks"]
+            cycle_height = height - seen[key]["height"]
+            remaining_cycles = int((N - rocks) // cycle_rocks)
+            rocks += remaining_cycles * cycle_rocks
+            height += remaining_cycles * cycle_height
+            for i in range(len(top_rocks)):
+                top_rocks[i] += remaining_cycles * cycle_height
+            
+            for i in range(seen[key]["height"], height + 1):
+                for j in range(WIDTH):
+                    if (i, j) in stopped_rocks:
+                        stopped_rocks.add((i + remaining_cycles * cycle_height, j))
+        print(rocks)
+
+
         # Calculate the positions of the rock
         start_pos = (height + 4, 2)
         curr_pattern = PATTERNS[rocks % len(PATTERNS)]
@@ -66,6 +91,7 @@ if __name__ == '__main__':
         # Calculate where the rock falls to
         i = 0
         while True:
+            # print(i)
             # Simulate rock falling
             if i % 2 == 0:
                 # On even ticks, jets move the rock left/right
@@ -81,20 +107,18 @@ if __name__ == '__main__':
                 moved_rock = move(stopped_rocks, rock, DOWN)
                 if moved_rock == rock:
                     # If rock did not move, it came to rest
-                    iterations.append(i)
                     break
                 else:
                     rock = moved_rock
             i += 1
 
         # Add it to stopped rocks and also check heights
-        stopped_rocks.update(rock)
-        rock_height = max(rock, key=lambda pos: pos[0])[0]
-        if rock_height > height:
-            height = rock_height
+        for pos in rock:
+            stopped_rocks.add(pos)
+            top_rocks[pos[1]] = max(top_rocks[pos[1]], pos[0])
+        height = max(top_rocks)
         rocks += 1
+    
 
-    print(height)
-    iterations.sort()
-    print(f"Min: {iterations[0]}\tMax: {iterations[-1]}\tAvg: {sum(iterations) // len(iterations)}\tMed: {iterations[len(iterations) // 2]}")
+    print(max(top_rocks))
         
