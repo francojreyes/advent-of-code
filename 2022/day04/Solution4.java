@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Solution {
+public class Solution4 {
     public static void main(String[] args) {
         int num = 0;
 

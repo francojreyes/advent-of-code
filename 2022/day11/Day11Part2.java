@@ -6,7 +6,7 @@ import java.util.Scanner;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-public class Part2 {
+public class Day11Part2 {
 
     private static final int NUM_ROUNDS = 10000;
 

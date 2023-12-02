@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class Solution {
+public class Solution13 {
 
     private static final String REGEX = ",|((?<=\\[|\\])|(?=\\[|\\]))";
 

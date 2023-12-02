@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class Solution {
+public class Solution18 {
 
     public static Droplet readInput() {
         Droplet droplet = new Droplet();

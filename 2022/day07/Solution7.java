@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Solution {
+public class Solution7 {
 
     public static int MAX_SIZE = 100000;
 
