@@ -17,9 +17,6 @@ let rec differs lst =
   | _ -> true
 
 let () =
-  let res =
-    read_lines () |> List.map ~f:parse_line
-    |> List.filter ~f:(fun r -> (incr r || decr r) && differs r)
-    |> List.length
-  in
-  Stdio.printf "%d\n" res
+  read_lines () |> List.map ~f:parse_line
+  |> List.filter ~f:(fun r -> (incr r || decr r) && differs r)
+  |> List.length |> Stdio.printf "%d\n"
