@@ -29,3 +29,18 @@
 
 ## 2023
 - **Day 01: [Trebuchet?!](https://adventofcode.com/2023/day/1)** solved in Java
+- **Day 02: [Cube Conundrum](https://adventofcode.com/2023/day/2)** solved in Java
+
+## 2024
+- **Day 01: [Historian Hysteria](https://adventofcode.com/2024/day/1)** solved in OCaml
+- **Day 02: [Red-Nosed Reports](https://adventofcode.com/2024/day/2)** solved in OCaml
+- **Day 03: [Mull It Over](https://adventofcode.com/2024/day/3)** solved in OCaml
+- **Day 04: [Ceres Search](https://adventofcode.com/2024/day/4)** solved in OCaml
+- **Day 05: [Print Queue](https://adventofcode.com/2024/day/5)** solved in OCaml
+- **Day 06: [Guard Gallivant](https://adventofcode.com/2024/day/6)** solved in OCaml
+- **Day 07: [Bridge Repair](https://adventofcode.com/2024/day/7)** solved in OCaml
+- **Day 08: [Resonant Collinearity](https://adventofcode.com/2024/day/8)** solved in OCaml
+- **Day 09: [Disk Fragmenter](https://adventofcode.com/2024/day/9)** solved in OCaml
+- **Day 10: [Hoof It](https://adventofcode.com/2024/day/10)** solved in OCaml
+- **Day 11: [Plutonian Pebbles](https://adventofcode.com/2024/day/11)** solved in OCaml
+- **Day 12: [Garden Groups](https://adventofcode.com/2024/day/12)** solved in OCaml
