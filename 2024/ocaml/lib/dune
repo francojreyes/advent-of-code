@@ -1,5 +1,7 @@
 (library
  (public_name aoc)
  (name helpers)
- (libraries re stdio)
+ (preprocess
+  (pps ppx_compare ppx_sexp_conv))
+ (libraries re stdio base ppx_sexp_conv ppx_compare)
  (modules helpers))

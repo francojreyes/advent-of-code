@@ -18,7 +18,7 @@ let rec differs lst =
 
 let rec drop_each lst =
   match lst with
-  | x :: xs -> xs :: List.map ~f:(fun lst -> x :: lst) (drop_each xs)
+  | x :: xs -> xs :: List.map ~f:(List.cons x) (drop_each xs)
   | [] -> []
 
 let () =

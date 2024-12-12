@@ -1,0 +1,4 @@
+(executables
+ (public_names day07_part1 day07_part2)
+ (names part1 part2)
+ (libraries aoc re))
