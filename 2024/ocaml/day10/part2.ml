@@ -16,17 +16,6 @@ let parse_grid acc =
     (List.fold ~init:(acc, 0) ~f:(fun (acc, x) row ->
          (parse_grid_row acc x row, x + 1)))
 
-type dir = Up | Right | Down | Left
-
-let dirs = [ Up; Left; Down; Right ]
-
-let cell_in_dir dir { x; y } =
-  match dir with
-  | Up -> { x = x - 1; y }
-  | Right -> { x; y = y + 1 }
-  | Down -> { x = x + 1; y }
-  | Left -> { x; y = y - 1 }
-
 let can_move grid cell dir =
   Option.value ~default:false
     ( Map.find grid cell >>= fun l ->
