@@ -30,14 +30,13 @@ let first_on_wall grid cell dir =
 
 let rec dfs grid (seen, a, s) cell =
   if Set.mem seen cell then (seen, a, s)
-  else
-    List.fold dirs
-      ~init:(Set.add seen cell, a + 1, s)
-      ~f:(fun (seen, a, s) dir ->
-        if same_section grid cell dir then
-          dfs grid (seen, a, s) (cell_in_dir dir cell)
-        else if first_on_wall grid cell dir then (seen, a, s + 1)
-        else (seen, a, s))
+  else List.fold dirs ~init:(Set.add seen cell, a + 1, s) ~f:(dfs_aux grid cell)
+
+and dfs_aux grid cell (seen, a, s) dir =
+  if same_section grid cell dir then
+    dfs grid (seen, a, s) (cell_in_dir dir cell)
+  else if first_on_wall grid cell dir then (seen, a, s + 1)
+  else (seen, a, s)
 
 let count_cell grid (seen, acc) cell =
   let seen', area, sides = dfs grid (seen, 0, 0) cell in

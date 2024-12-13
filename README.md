@@ -44,3 +44,4 @@
 - **Day 10: [Hoof It](https://adventofcode.com/2024/day/10)** solved in OCaml
 - **Day 11: [Plutonian Pebbles](https://adventofcode.com/2024/day/11)** solved in OCaml
 - **Day 12: [Garden Groups](https://adventofcode.com/2024/day/12)** solved in OCaml
+- **Day 13: [Claw Contraption](https://adventofcode.com/2024/day/13)** solved in OCaml
