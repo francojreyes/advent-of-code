@@ -19,7 +19,7 @@ let parse_grid acc =
 let next_dir dir =
   match dir with Up -> Right | Right -> Down | Down -> Left | Left -> Up
 
-  module CoordDir = struct
+module CoordDir = struct
   module T = struct
     type t = coord * dir [@@deriving compare, sexp]
   end

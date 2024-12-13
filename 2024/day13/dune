@@ -1,0 +1,6 @@
+(executables
+ (public_names day13_part1 day13_part2)
+ (names part1 part2)
+ (preprocess
+  (pps ppx_let))
+ (libraries aoc re ppx_let))

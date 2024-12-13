@@ -24,6 +24,7 @@ module Coord = struct
 end
 
 type dir = Up | Right | Down | Left [@@deriving compare, sexp]
+
 let dirs = [ Up; Left; Down; Right ]
 
 let cell_in_dir dir { x; y } =
