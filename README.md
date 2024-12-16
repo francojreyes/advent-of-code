@@ -45,3 +45,6 @@
 - **Day 11: [Plutonian Pebbles](https://adventofcode.com/2024/day/11)** solved in OCaml
 - **Day 12: [Garden Groups](https://adventofcode.com/2024/day/12)** solved in OCaml
 - **Day 13: [Claw Contraption](https://adventofcode.com/2024/day/13)** solved in OCaml
+- **Day 14: [Restroom Redoubt](https://adventofcode.com/2024/day/14)** solved in OCaml
+- **Day 15: [Warehouse Woes](https://adventofcode.com/2024/day/15)** solved in OCaml
+- **Day 16: [Reindeer Maze](https://adventofcode.com/2024/day/16)** solved in OCaml
