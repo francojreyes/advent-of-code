@@ -33,7 +33,7 @@ let simulate robots =
     |> List.sort ~compare:(fun p1 p2 ->
            let cmp = Int.compare p1.y p2.y in
            if cmp = 0 then Int.compare p1.x p2.x else cmp)
-    |> List.remove_consecutive_duplicates ~equal:(Coord.equal)
+    |> List.remove_consecutive_duplicates ~equal:Coord.equal
   in
   print { x = 0; y = 0 } sorted;
   Stdio.printf "------------------------------------------------\n";
