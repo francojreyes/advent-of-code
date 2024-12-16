@@ -76,7 +76,7 @@ and move_box grid coord dir =
 let move (grid, curr) dir =
   let next = cell_in_dir dir curr in
   match make_space grid [ next ] dir with
-  | Some grid' ->  (grid', next)
+  | Some grid' -> (grid', next)
   | None -> (grid, curr)
 
 let () =

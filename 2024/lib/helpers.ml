@@ -23,7 +23,7 @@ module Coord = struct
   include Comparator.Make (T)
 end
 
-type dir = Up | Right | Down | Left [@@deriving compare, sexp]
+type dir = Up | Right | Down | Left [@@deriving equal, compare, sexp]
 
 let dirs = [ Up; Left; Down; Right ]
 
@@ -33,3 +33,16 @@ let cell_in_dir dir { x; y } =
   | Right -> { x; y = y + 1 }
   | Down -> { x = x + 1; y }
   | Left -> { x; y = y - 1 }
+
+let next_dir = function
+  | Up -> Right
+  | Right -> Down
+  | Down -> Left
+  | Left -> Up
+
+let prev_dir = function
+  | Up -> Left
+  | Left -> Down
+  | Down -> Right
+  | Right -> Up
+
