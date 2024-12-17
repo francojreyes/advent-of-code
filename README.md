@@ -48,3 +48,4 @@
 - **Day 14: [Restroom Redoubt](https://adventofcode.com/2024/day/14)** solved in OCaml
 - **Day 15: [Warehouse Woes](https://adventofcode.com/2024/day/15)** solved in OCaml
 - **Day 16: [Reindeer Maze](https://adventofcode.com/2024/day/16)** solved in OCaml
+- **Day 17: [Chronospatial Computer](https://adventofcode.com/2024/day/17)** solved in OCaml

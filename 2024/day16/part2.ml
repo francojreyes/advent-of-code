@@ -90,20 +90,22 @@ let rec all_pred state acc curr =
         List.fold ~init:acc ~f:(fun acc -> all_pred state acc) pred
 
 (* let nx = 17
-let ny = 17
-let rec print { x; y } grid best =
-  if y >= ny then (
-    Stdio.printf "\n";
-    if x >= nx-1 then () else print { x = x + 1; y = 0 } grid best)
-  else
-    (Stdio.printf
-      (if Set.mem best {x;y} then "O"
-      else if Set.mem grid {x;y} then "#"
-      else ".");
-  print { x = x; y = y + 1 } grid best) *)
+   let ny = 17
+   let rec print { x; y } grid best =
+     if y >= ny then (
+       Stdio.printf "\n";
+       if x >= nx-1 then () else print { x = x + 1; y = 0 } grid best)
+     else
+       (Stdio.printf
+         (if Set.mem best {x;y} then "O"
+         else if Set.mem grid {x;y} then "#"
+         else ".");
+     print { x = x; y = y + 1 } grid best) *)
 
 let list_min ~key lst =
-  List.fold ~init:(List.hd_exn lst) ~f:(fun acc x -> if key x < key acc then x else acc) lst
+  List.fold ~init:(List.hd_exn lst)
+    ~f:(fun acc x -> if key x < key acc then x else acc)
+    lst
 
 let min_only ~key lst =
   let min_el = list_min ~key lst in
@@ -121,9 +123,13 @@ let () =
       [ (0, (src, Right), (src, Right)) ]
   in
   List.map ~f:(fun dir -> (exit, dir)) dirs
-  |> min_only ~key:(fun x -> Option.value_map ~default:100000 ~f:(fun {dist;pred=_} -> dist) (Map.find state x))
+  |> min_only ~key:(fun x ->
+         Option.value_map ~default:100000
+           ~f:(fun { dist; pred = _ } -> dist)
+           (Map.find state x))
   |> List.fold ~init:(Set.empty (module CoordDir)) ~f:(all_pred state)
   |> Set.map (module Coord) ~f:fst
   (* |> print {x=0;y=0} grid *)
   (* |> Set.iter ~f:(fun c -> Stdio.printf "%s\n" (Sexp.to_string (Coord.sexp_of_t c))) *)
-  |> Set.length |> Stdio.printf "%d\n"
+  |> Set.length
+  |> Stdio.printf "%d\n"

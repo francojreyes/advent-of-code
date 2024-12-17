@@ -45,4 +45,3 @@ let prev_dir = function
   | Left -> Down
   | Down -> Right
   | Right -> Up
-
