@@ -45,3 +45,25 @@ let prev_dir = function
   | Left -> Down
   | Down -> Right
   | Right -> Up
+
+module Queue : sig
+  type 'a t
+
+  val empty : 'a t
+  val push : 'a t -> 'a -> 'a t
+  val pop : 'a t -> ('a * 'a t) option
+  val singleton : 'a -> 'a t
+end = struct
+  type 'a t = { s1 : 'a list; s2 : 'a list }
+
+  let empty = { s1 = []; s2 = [] }
+  let push { s1; s2 } a = { s1 = a :: s1; s2 }
+
+  let pop q =
+    let { s1; s2 } =
+      if List.is_empty q.s2 then { s1 = []; s2 = List.rev q.s1 } else q
+    in
+    match s2 with [] -> None | a :: s2 -> Some (a, { s1; s2 })
+
+  let singleton a = push empty a
+end
