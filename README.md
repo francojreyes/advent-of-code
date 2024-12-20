@@ -49,3 +49,5 @@
 - **Day 15: [Warehouse Woes](https://adventofcode.com/2024/day/15)** solved in OCaml
 - **Day 16: [Reindeer Maze](https://adventofcode.com/2024/day/16)** solved in OCaml
 - **Day 17: [Chronospatial Computer](https://adventofcode.com/2024/day/17)** solved in OCaml
+- **Day 18: [RAM Run](https://adventofcode.com/2024/day/18)** solved in OCaml
+- **Day 19: [Linen Layout](https://adventofcode.com/2024/day/19)** solved in OCaml
