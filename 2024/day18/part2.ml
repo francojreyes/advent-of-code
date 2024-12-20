@@ -37,13 +37,3 @@ let () =
          if dfs s' [ src ] then Continue s' else Stop c)
        ~finish:(Fn.const src)
   |> fun { x; y } -> Stdio.printf "%d,%d\n" x y
-
-(*
-Register A: 61657405
-Register B: 0
-Register C: 0
-
-Program: 2,4,1,2,7,5,4,3,0,3,1,7,5,5,3,0
-
-
-  *)

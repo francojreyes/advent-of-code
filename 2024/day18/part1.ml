@@ -38,13 +38,3 @@ let () =
   bfs (Set.add corrupted src) (Queue.singleton (0, src))
   |> Option.sexp_of_t Int.sexp_of_t
   |> Sexp.to_string |> Stdio.printf "%s\n"
-
-(*
-Register A: 61657405
-Register B: 0
-Register C: 0
-
-Program: 2,4,1,2,7,5,4,3,0,3,1,7,5,5,3,0
-
-
-  *)

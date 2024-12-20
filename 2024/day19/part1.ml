@@ -8,9 +8,8 @@ let rec possible ps memo s =
       if String.is_empty s then (memo, true)
       else
         let memo, res =
-          (s, "")
-          :: List.init (String.length s) ~f:(fun i ->
-                 (String.prefix s i, String.drop_prefix s i))
+          List.init (String.length s) ~f:(fun i ->
+              (String.drop_suffix s i, String.suffix s i))
           |> List.filter ~f:(fun (pre, _) -> Set.mem ps pre)
           |> List.fold_until ~init:memo
                ~f:(fun memo (_, suf) ->
