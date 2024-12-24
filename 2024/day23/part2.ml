@@ -15,34 +15,21 @@ let parse_line s =
   if String.compare a b < 0 then (a, b) else (b, a)
 
 let pair_of_list (a, b) = [ a; b ]
+let adj edges v u = Set.mem edges (u, v)
 
-let combinations3 lst =
-  let rec aux3 a b acc = function
-    | [] -> acc
-    | c :: cs -> aux3 a b ((a, b, c) :: acc) cs
+let maximum_clique edges nodes =
+  let rec aux best acc = function
+    | [] ->
+        let s = List.rev acc |> String.concat ~sep:"," in
+        if String.length s > String.length best then s else best
+    | v :: vs ->
+        let best' =
+          if List.for_all ~f:(adj edges v) acc then aux best (v :: acc) vs
+          else best
+        in
+        aux best' acc vs
   in
-  let rec aux2 a acc = function
-    | [] | [ _ ] -> acc
-    | b :: bs -> aux2 a (aux3 a b acc bs) bs
-  in
-  let rec aux1 acc = function
-    | [] | [ _ ] | [ _; _ ] -> acc
-    | a :: aas -> aux1 (aux2 a acc aas) aas
-  in
-  aux1 [] lst
-
-let is_connected edges (a, b, c) =
-  Set.mem edges (a, b) && Set.mem edges (b, c) && Set.mem edges (a, c)
-
-let extend_clique edges nodes clique =
-  let adjacent a b =
-    if String.compare a b < 0 then Set.mem edges (a, b) else Set.mem edges (b, a)
-  in
-  let open Option.Let_syntax in
-  let%bind d =
-    List.find nodes ~f:(fun v -> List.for_all clique ~f:(adjacent v))
-  in
-  return (d :: clique)
+  aux "" [] nodes
 
 let () =
   let edges = read_lines () |> List.map ~f:parse_line in
@@ -52,14 +39,7 @@ let () =
     |> List.remove_consecutive_duplicates ~equal:String.equal
   in
   let edges = Set.of_list (module Edge) edges in
-  combinations3 nodes
-  |> List.filter ~f:(is_connected edges)
-  |> List.map ~f:(fun (a, b, c) -> [ a; b; c ])
-  |> Fn.apply_n_times ~n:10 (List.filter_map ~f:(extend_clique edges nodes))
-  |> List.hd_exn
-  |> List.sort ~compare:String.compare
-  |> String.concat ~sep:","
-  |> Stdio.print_endline
+  maximum_clique edges nodes |> Stdio.print_endline
 
 (*
 
