@@ -54,3 +54,4 @@
 - **Day 20: [Race Condition](https://adventofcode.com/2024/day/20)** solved in OCaml
 - **Day 21: [Keypad Conundrum](https://adventofcode.com/2024/day/21)** attempted in OCaml
 - **Day 22: [Monkey Market](https://adventofcode.com/2024/day/22)** solved in OCaml
+- **Day 23: [LAN Party](https://adventofcode.com/2024/day/23)** solved in OCaml
