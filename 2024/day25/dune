@@ -1,6 +1,6 @@
 (executables
- (public_names day25_part1 day25_part2)
- (names part1 part2)
+ (public_names day25_part1)
+ (names part1)
  (preprocess
   (pps ppx_compare ppx_sexp_conv ppx_let))
  (libraries aoc base ppx_compare ppx_sexp_conv ppx_let))

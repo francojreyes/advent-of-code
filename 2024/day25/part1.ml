@@ -1,12 +1,8 @@
 open Base
 open Helpers
 
-let rec count_hash cnts s =
-  match (cnts, s) with
-  | x :: xs, y :: ys ->
-      let x' = if Char.equal y '#' then x + 1 else x in
-      x' :: count_hash xs ys
-  | _ -> []
+let count_hash =
+  List.map2_exn ~f:(fun cnt c -> if Char.equal c '#' then cnt + 1 else cnt)
 
 let parse_block lines =
   let open Option.Let_syntax in
@@ -20,13 +16,14 @@ let parse_block lines =
 let fits (key, lock) =
   List.map2_exn key lock ~f:( + ) |> List.for_all ~f:(fun x -> x <= 6)
 
+let curry f (a, b) = f a b
+
 let () =
-  let keys, locks =
-    read_lines ()
-    |> List.group ~break:(fun a b -> String.is_empty a || String.is_empty b)
-    |> List.filter ~f:(fun g -> List.length g > 1)
-    |> List.filter_map ~f:parse_block
-    |> List.fold ~init:([], []) ~f:(fun (keys, locks) (is_key, pins) ->
-           if is_key then (pins :: keys, locks) else (keys, pins :: locks))
-  in
-  List.cartesian_product keys locks |> List.count ~f:fits |> Stdio.printf "%d\n"
+  read_lines ()
+  |> List.group ~break:(fun a b -> String.is_empty a || String.is_empty b)
+  |> List.filter ~f:(fun g -> List.length g > 1)
+  |> List.filter_map ~f:parse_block
+  |> List.partition_map ~f:(fun (is_key, pins) ->
+         if is_key then First pins else Second pins)
+  |> curry List.cartesian_product
+  |> List.count ~f:fits |> Stdio.printf "%d\n"
