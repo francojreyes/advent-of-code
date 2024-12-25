@@ -14,7 +14,6 @@ let parse_line s =
   let a, b = String.lsplit2_exn ~on:'-' s in
   if String.compare a b < 0 then (a, b) else (b, a)
 
-let pair_of_list (a, b) = [ a; b ]
 let adj edges v u = Set.mem edges (u, v)
 
 let maximum_clique edges nodes =
@@ -34,9 +33,8 @@ let maximum_clique edges nodes =
 let () =
   let edges = read_lines () |> List.map ~f:parse_line in
   let nodes =
-    List.concat_map ~f:pair_of_list edges
-    |> List.sort ~compare:String.compare
-    |> List.remove_consecutive_duplicates ~equal:String.equal
+    List.concat_map ~f:(fun (a, b) -> [ a; b ]) edges
+    |> List.dedup_and_sort ~compare:String.compare
   in
   let edges = Set.of_list (module Edge) edges in
   maximum_clique edges nodes |> Stdio.print_endline

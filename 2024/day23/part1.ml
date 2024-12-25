@@ -41,8 +41,7 @@ let () =
   let edges = read_lines () |> List.map ~f:parse_line in
   let nodes =
     List.concat_map ~f:pair_of_list edges
-    |> List.sort ~compare:String.compare
-    |> List.remove_consecutive_duplicates ~equal:String.equal
+    |> List.dedup_and_sort ~compare:String.compare
   in
   let edges = Set.of_list (module Edge) edges in
   combinations3 nodes
