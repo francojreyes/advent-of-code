@@ -2,33 +2,29 @@ open Base
 open Helpers
 
 let numpad =
-  ( Map.of_alist_exn
-      (module Char)
-      [
-        ('7', { x = 0; y = 0 });
-        ('8', { x = 0; y = 1 });
-        ('9', { x = 0; y = 2 });
-        ('4', { x = 1; y = 0 });
-        ('5', { x = 1; y = 1 });
-        ('6', { x = 1; y = 2 });
-        ('1', { x = 2; y = 0 });
-        ('2', { x = 2; y = 1 });
-        ('3', { x = 2; y = 2 });
-        ('0', { x = 3; y = 1 });
-        ('A', { x = 3; y = 2 });
-      ],
+  ( (function
+    | '7' -> { x = 0; y = 0 }
+    | '8' -> { x = 0; y = 1 }
+    | '9' -> { x = 0; y = 2 }
+    | '4' -> { x = 1; y = 0 }
+    | '5' -> { x = 1; y = 1 }
+    | '6' -> { x = 1; y = 2 }
+    | '1' -> { x = 2; y = 0 }
+    | '2' -> { x = 2; y = 1 }
+    | '3' -> { x = 2; y = 2 }
+    | '0' -> { x = 3; y = 1 }
+    | 'A' -> { x = 3; y = 2 }
+    | _ -> raise (Failure "invalid char")),
     { x = 3; y = 0 } )
 
 let dpad =
-  ( Map.of_alist_exn
-      (module Char)
-      [
-        ('^', { x = 0; y = 1 });
-        ('A', { x = 0; y = 2 });
-        ('<', { x = 1; y = 0 });
-        ('v', { x = 1; y = 1 });
-        ('>', { x = 1; y = 2 });
-      ],
+  ( (function
+    | '^' -> { x = 0; y = 1 }
+    | 'A' -> { x = 0; y = 2 }
+    | '<' -> { x = 1; y = 0 }
+    | 'v' -> { x = 1; y = 1 }
+    | '>' -> { x = 1; y = 2 }
+    | _ -> raise (Failure "invalid char")),
     { x = 0; y = 0 } )
 
 let passes_gap gap src dst =
@@ -56,8 +52,8 @@ for shortest path:
  reverse because it's reversed later
 *)
 let moves (pad, gap) src dst =
-  let src = Map.find_exn pad src in
-  let dst = Map.find_exn pad dst in
+  let src = pad src in
+  let dst = pad dst in
   let dx = dst.x - src.x in
   let dy = dst.y - src.y in
   let res =
@@ -81,12 +77,7 @@ let move_sequence pad keys =
 let complexity code =
   let num = Int.of_string (String.prefix code 3) in
   let robot1_seq = move_sequence numpad (String.to_list code) in
-  let robot2_seq = move_sequence dpad robot1_seq in
-  let my_seq = move_sequence dpad robot2_seq in
-  Stdio.print_endline (String.of_char_list my_seq);
-  Stdio.print_endline (String.of_char_list robot2_seq);
-  Stdio.print_endline (String.of_char_list robot1_seq);
-  Stdio.print_endline code;
+  let my_seq = Fn.apply_n_times ~n:2 (move_sequence dpad) robot1_seq in
   Stdio.printf "%d * %d\n" (List.length my_seq) num;
   num * List.length my_seq
 

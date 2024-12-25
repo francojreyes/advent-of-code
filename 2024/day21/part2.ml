@@ -1,42 +1,6 @@
 open Base
 open Helpers
 
-(* let numpad =
-  ( Map.of_alist_exn
-      (module Char)
-      [
-        ('7', { x = 0; y = 0 });
-        ('8', { x = 0; y = 1 });
-        ('9', { x = 0; y = 2 });
-        ('4', { x = 1; y = 0 });
-        ('5', { x = 1; y = 1 });
-        ('6', { x = 1; y = 2 });
-        ('1', { x = 2; y = 0 });
-        ('2', { x = 2; y = 1 });
-        ('3', { x = 2; y = 2 });
-        ('0', { x = 3; y = 1 });
-        ('A', { x = 3; y = 2 });
-      ],
-    { x = 3; y = 0 } ) *)
-
-let dpad =
-  ( Map.of_alist_exn
-      (module Char)
-      [
-        ('^', { x = 0; y = 1 });
-        ('A', { x = 0; y = 2 });
-        ('<', { x = 1; y = 0 });
-        ('v', { x = 1; y = 1 });
-        ('>', { x = 1; y = 2 });
-      ],
-    { x = 0; y = 0 } )
-
-let passes_gap gap src dst =
-  let mid =
-    if src.y < dst.y then { x = dst.x; y = src.y } else { x = src.x; y = dst.y }
-  in
-  Coord.equal gap mid
-
 (*
 to avoid gaps:
  up, left -> up before left
@@ -55,42 +19,184 @@ for shortest path:
 
  reverse because it's reversed later
 *)
-let moves (pad, gap) src dst =
-  let src = Map.find_exn pad src in
-  let dst = Map.find_exn pad dst in
-  let dx = dst.x - src.x in
-  let dy = dst.y - src.y in
-  let res =
-    List.init ~f:(Fn.const '<') (abs (min dy 0))
-    @ List.init ~f:(Fn.const '^') (abs (min dx 0))
-    @ List.init ~f:(Fn.const 'v') (max dx 0)
-    @ List.init ~f:(Fn.const '>') (max dy 0)
-  in
-  if passes_gap gap src dst then res else List.rev res
+let moves src dst =
+  if Char.equal src dst then [ 'A' ]
+  else
+    match (src, dst) with
+    | '1', '2' -> [ 'A'; '>' ]
+    | '1', '3' -> [ 'A'; '>'; '>' ]
+    | '1', '4' -> [ 'A'; '^' ]
+    | '1', '5' -> [ 'A'; '>'; '^' ]
+    | '1', '6' -> [ 'A'; '>'; '>'; '^' ]
+    | '1', '7' -> [ 'A'; '^'; '^' ]
+    | '1', '8' -> [ 'A'; '>'; '^'; '^' ]
+    | '1', '9' -> [ 'A'; '>'; '>'; '^'; '^' ]
+    | '1', '0' -> [ 'A'; 'v'; '>' ]
+    | '1', 'A' -> [ 'A'; 'v'; '>'; '>' ]
+    | '2', '1' -> [ 'A'; '<' ]
+    | '2', '3' -> [ 'A'; '>' ]
+    | '2', '4' -> [ 'A'; '^'; '<' ]
+    | '2', '5' -> [ 'A'; '^' ]
+    | '2', '6' -> [ 'A'; '>'; '^' ]
+    | '2', '7' -> [ 'A'; '^'; '^'; '<' ]
+    | '2', '8' -> [ 'A'; '^'; '^' ]
+    | '2', '9' -> [ 'A'; '>'; '^'; '^' ]
+    | '2', '0' -> [ 'A'; 'v' ]
+    | '2', 'A' -> [ 'A'; '>'; 'v' ]
+    | '3', '1' -> [ 'A'; '<'; '<' ]
+    | '3', '2' -> [ 'A'; '<' ]
+    | '3', '4' -> [ 'A'; '^'; '<'; '<' ]
+    | '3', '5' -> [ 'A'; '^'; '<' ]
+    | '3', '6' -> [ 'A'; '^' ]
+    | '3', '7' -> [ 'A'; '^'; '^'; '<'; '<' ]
+    | '3', '8' -> [ 'A'; '^'; '^'; '<' ]
+    | '3', '9' -> [ 'A'; '^'; '^' ]
+    | '3', '0' -> [ 'A'; 'v'; '<' ]
+    | '3', 'A' -> [ 'A'; 'v' ]
+    | '4', '1' -> [ 'A'; 'v' ]
+    | '4', '2' -> [ 'A'; '>'; 'v' ]
+    | '4', '3' -> [ 'A'; '>'; '>'; 'v' ]
+    | '4', '5' -> [ 'A'; '>' ]
+    | '4', '6' -> [ 'A'; '>'; '>' ]
+    | '4', '7' -> [ 'A'; '^' ]
+    | '4', '8' -> [ 'A'; '>'; '^' ]
+    | '4', '9' -> [ 'A'; '>'; '>'; '^' ]
+    | '4', '0' -> [ 'A'; 'v'; 'v'; '>' ]
+    | '4', 'A' -> [ 'A'; 'v'; 'v'; '>'; '>' ]
+    | '5', '1' -> [ 'A'; 'v'; '<' ]
+    | '5', '2' -> [ 'A'; 'v' ]
+    | '5', '3' -> [ 'A'; '>'; 'v' ]
+    | '5', '4' -> [ 'A'; '<' ]
+    | '5', '6' -> [ 'A'; '>' ]
+    | '5', '7' -> [ 'A'; '^'; '<' ]
+    | '5', '8' -> [ 'A'; '^' ]
+    | '5', '9' -> [ 'A'; '>'; '^' ]
+    | '5', '0' -> [ 'A'; 'v'; 'v' ]
+    | '5', 'A' -> [ 'A'; '>'; 'v'; 'v' ]
+    | '6', '1' -> [ 'A'; 'v'; '<'; '<' ]
+    | '6', '2' -> [ 'A'; 'v'; '<' ]
+    | '6', '3' -> [ 'A'; 'v' ]
+    | '6', '4' -> [ 'A'; '<'; '<' ]
+    | '6', '5' -> [ 'A'; '<' ]
+    | '6', '7' -> [ 'A'; '^'; '<'; '<' ]
+    | '6', '8' -> [ 'A'; '^'; '<' ]
+    | '6', '9' -> [ 'A'; '^' ]
+    | '6', '0' -> [ 'A'; 'v'; 'v'; '<' ]
+    | '6', 'A' -> [ 'A'; 'v'; 'v' ]
+    | '7', '1' -> [ 'A'; 'v'; 'v' ]
+    | '7', '2' -> [ 'A'; '>'; 'v'; 'v' ]
+    | '7', '3' -> [ 'A'; '>'; '>'; 'v'; 'v' ]
+    | '7', '4' -> [ 'A'; 'v' ]
+    | '7', '5' -> [ 'A'; '>'; 'v' ]
+    | '7', '6' -> [ 'A'; '>'; '>'; 'v' ]
+    | '7', '8' -> [ 'A'; '>' ]
+    | '7', '9' -> [ 'A'; '>'; '>' ]
+    | '7', '0' -> [ 'A'; 'v'; 'v'; 'v'; '>' ]
+    | '7', 'A' -> [ 'A'; 'v'; 'v'; 'v'; '>'; '>' ]
+    | '8', '1' -> [ 'A'; 'v'; 'v'; '<' ]
+    | '8', '2' -> [ 'A'; 'v'; 'v' ]
+    | '8', '3' -> [ 'A'; '>'; 'v'; 'v' ]
+    | '8', '4' -> [ 'A'; 'v'; '<' ]
+    | '8', '5' -> [ 'A'; 'v' ]
+    | '8', '6' -> [ 'A'; '>'; 'v' ]
+    | '8', '7' -> [ 'A'; '<' ]
+    | '8', '9' -> [ 'A'; '>' ]
+    | '8', '0' -> [ 'A'; 'v'; 'v'; 'v' ]
+    | '8', 'A' -> [ 'A'; '>'; 'v'; 'v'; 'v' ]
+    | '9', '1' -> [ 'A'; 'v'; 'v'; '<'; '<' ]
+    | '9', '2' -> [ 'A'; 'v'; 'v'; '<' ]
+    | '9', '3' -> [ 'A'; 'v'; 'v' ]
+    | '9', '4' -> [ 'A'; 'v'; '<'; '<' ]
+    | '9', '5' -> [ 'A'; 'v'; '<' ]
+    | '9', '6' -> [ 'A'; 'v' ]
+    | '9', '7' -> [ 'A'; '<'; '<' ]
+    | '9', '8' -> [ 'A'; '<' ]
+    | '9', '0' -> [ 'A'; 'v'; 'v'; 'v'; '<' ]
+    | '9', 'A' -> [ 'A'; 'v'; 'v'; 'v' ]
+    | '0', '1' -> [ 'A'; '<'; '^' ]
+    | '0', '2' -> [ 'A'; '^' ]
+    | '0', '3' -> [ 'A'; '>'; '^' ]
+    | '0', '4' -> [ 'A'; '<'; '^'; '^' ]
+    | '0', '5' -> [ 'A'; '^'; '^' ]
+    | '0', '6' -> [ 'A'; '>'; '^'; '^' ]
+    | '0', '7' -> [ 'A'; '<'; '^'; '^'; '^' ]
+    | '0', '8' -> [ 'A'; '^'; '^'; '^' ]
+    | '0', '9' -> [ 'A'; '>'; '^'; '^'; '^' ]
+    | '0', 'A' -> [ 'A'; '>' ]
+    | 'A', '1' -> [ 'A'; '<'; '<'; '^' ]
+    | 'A', '2' -> [ 'A'; '^'; '<' ]
+    | 'A', '3' -> [ 'A'; '^' ]
+    | 'A', '4' -> [ 'A'; '<'; '<'; '^'; '^' ]
+    | 'A', '5' -> [ 'A'; '^'; '^'; '<' ]
+    | 'A', '6' -> [ 'A'; '^'; '^' ]
+    | 'A', '7' -> [ 'A'; '<'; '<'; '^'; '^'; '^' ]
+    | 'A', '8' -> [ 'A'; '^'; '^'; '^'; '<' ]
+    | 'A', '9' -> [ 'A'; '^'; '^'; '^' ]
+    | 'A', '0' -> [ 'A'; '<' ]
+    | '<', 'v' -> [ 'A'; '>' ]
+    | '<', '>' -> [ 'A'; '>'; '>' ]
+    | '<', '^' -> [ 'A'; '^'; '>' ]
+    | '<', 'A' -> [ 'A'; '^'; '>'; '>' ]
+    | 'v', '<' -> [ 'A'; '<' ]
+    | 'v', '>' -> [ 'A'; '>' ]
+    | 'v', '^' -> [ 'A'; '^' ]
+    | 'v', 'A' -> [ 'A'; '>'; '^' ]
+    | '>', '<' -> [ 'A'; '<'; '<' ]
+    | '>', 'v' -> [ 'A'; '<' ]
+    | '>', '^' -> [ 'A'; '^'; '<' ]
+    | '>', 'A' -> [ 'A'; '^' ]
+    | '^', '<' -> [ 'A'; '<'; 'v' ]
+    | '^', 'v' -> [ 'A'; 'v' ]
+    | '^', '>' -> [ 'A'; '>'; 'v' ]
+    | '^', 'A' -> [ 'A'; '>' ]
+    | 'A', '<' -> [ 'A'; '<'; '<'; 'v' ]
+    | 'A', 'v' -> [ 'A'; 'v'; '<' ]
+    | 'A', '>' -> [ 'A'; 'v' ]
+    | 'A', '^' -> [ 'A'; '<' ]
+    | _ -> raise (Failure (String.of_list [ src; dst ]))
 
-let move_sequence pad keys =
-  let rec go acc prev keys =
-    match keys with
-    | [] -> acc
-    | key :: keys ->
-        let acc = 'A' :: (moves pad prev key @ acc) in
-        go acc key keys
-  in
-  go [] 'A' keys |> List.rev
+module State = struct
+  module T = struct
+    type t = char * char * int [@@deriving compare, sexp]
+  end
 
-(* let complexity code =
+  include T
+  include Comparator.Make (T)
+end
+
+(* Number of moves to go from src to dst using n dpads *)
+let rec move_length memo ((src, dst, n) as key) =
+  match Map.find memo key with
+  | Some data -> (memo, data)
+  | None ->
+      let moves = moves src dst |> List.rev in
+      let memo, data, _ =
+        if n = 1 then (memo, List.length moves, 'A')
+        else sequence_length (n - 1) memo moves
+      in
+      (Map.set memo ~key ~data, data)
+
+and sequence_length n memo keys =
+  List.fold ~init:(memo, 0, 'A')
+    ~f:(fun (memo, data, prev) key ->
+      let memo, c = move_length memo (prev, key, n) in
+      (memo, data + c, key))
+    keys
+
+let complexity memo code =
   let num = Int.of_string (String.prefix code 3) in
-  let robot1_seq = move_sequence numpad (String.to_list code) in
-  let my_seq = Fn.apply_n_times ~n:25 (move_sequence dpad) robot1_seq in
-  Stdio.printf "%d * %d\n" (List.length my_seq) num;
-  num * List.length my_seq *)
-
-(* let () =
-   read_lines () |> List.sum (module Int) ~f:complexity |> Stdio.printf "%d\n" *)
+  let memo, len, _ = sequence_length 26 memo (String.to_list code) in
+  Stdio.printf "%d * %d\n" len num;
+  (memo, num * len)
 
 let () =
-  Fn.apply_n_times ~n:25 (move_sequence dpad) [ '<' ]
-  |> List.length |> Stdio.printf "%d\n"
+  read_lines ()
+  |> List.fold
+       ~init:(Map.empty (module State), 0)
+       ~f:(fun (memo, acc) code ->
+         let memo, c = complexity memo code in
+         (memo, acc + c))
+  |> snd |> Stdio.printf "%d\n"
 
 (*
 
@@ -116,12 +222,26 @@ v<<A>>^AvA^Av<<A>>^AAv<A<A>>^AAvAA^<A>Av<A>^AA<A>Av<A<A>>^AAAvA^<A>A
 379A
 68 * 379
 
-<<vA^>>AvA^A<<vAA>A^>AA<Av>A^AAvA^A<vA^>AA<A>A<<vA>A^>AAA<Av>A^A
-<A>A<<vAA^>AA>AvAA^A<vAAA^>A
-^A<<^^A>>AvvvA
+<<vA^>>AvA^A <<vAA>A^>AA<Av>A^AAvA^A <vA^>AA<A>A <<vA>A^>AAA<Av>A^A
+<A>A <<vAA^>AA>A vAA^A <vAAA^>A
+^A <<^^A >>A vvvA
 379A
 64 * 379
 
 2^4 = 16 robot1_seq, avg len 16
 16 * 2^16 ~= 1mil robot2_seq, avg len 30
+
+12 + 27 + 11 + 18
+27 should be 23
+
+<<vAA>A^>A A <Av>A^A A vA^A
+<<vA A ^>A A >A
+<<^^A
+
+27:
+A< 2 = 10
+<< 2 = 1
+<^ 2 = 7
+^^ 2 = 1
+^A 2 = 4
   *)
