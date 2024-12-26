@@ -12,7 +12,7 @@ end
 
 let parse_line s =
   let a, b = String.lsplit2_exn ~on:'-' s in
-  if String.compare a b < 0 then (a, b) else (b, a)
+  if String.(a < b) then (a, b) else (b, a)
 
 let adj edges v u = Set.mem edges (u, v)
 

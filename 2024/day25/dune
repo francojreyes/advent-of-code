@@ -2,5 +2,5 @@
  (public_names day25_part1)
  (names part1)
  (preprocess
-  (pps ppx_compare ppx_sexp_conv ppx_let))
- (libraries aoc base ppx_compare ppx_sexp_conv ppx_let))
+  (pps ppx_jane))
+ (libraries aoc base ppx_jane))

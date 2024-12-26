@@ -67,3 +67,11 @@ end = struct
 
   let singleton a = push empty a
 end
+
+let memo m f =
+  let tbl = Hashtbl.create m in
+  fun x -> Hashtbl.find_or_add tbl x ~default:(fun () -> f x)
+
+let memo_rec m f_norec x =
+  let rec f = lazy (memo m (fun x -> f_norec (force f) x)) in
+  (force f) x
