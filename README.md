@@ -60,3 +60,4 @@
 
 ## 2025
 - **Day 01: [Secret Entrance](https://adventofcode.com/2025/day/1)** solved in OCaml
+- **Day 02: [Gift Shop](https://adventofcode.com/2025/day/2)** solved in OCaml
