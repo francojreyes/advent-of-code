@@ -57,3 +57,6 @@
 - **Day 23: [LAN Party](https://adventofcode.com/2024/day/23)** solved in OCaml
 - **Day 24: [Crossed Wires](https://adventofcode.com/2024/day/24)** solved in OCaml
 - **Day 25: [Code Chronicle](https://adventofcode.com/2024/day/25)** solved in OCaml
+
+## 2025
+- **Day 01: [Secret Entrance](https://adventofcode.com/2025/day/1)** solved in OCaml
