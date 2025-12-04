@@ -62,3 +62,4 @@
 - **Day 01: [Secret Entrance](https://adventofcode.com/2025/day/1)** solved in OCaml
 - **Day 02: [Gift Shop](https://adventofcode.com/2025/day/2)** solved in OCaml
 - **Day 03: [Lobby](https://adventofcode.com/2025/day/3)** solved in OCaml
+- **Day 04: [Printing Department](https://adventofcode.com/2025/day/4)** solved in OCaml
