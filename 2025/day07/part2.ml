@@ -1,9 +1,8 @@
 open! Core
 
 let parse_splitters line =
-  String.to_list line
-  |> List.filter_mapi ~f:(fun i c -> Option.some_if (Char.equal c '^') i)
-  |> Int.Set.of_list
+  String.foldi line ~init:Int.Set.empty ~f:(fun i splitters c ->
+    if Char.equal c '^' then Set.add splitters i else splitters)
 
 let split beams splitters = 
   let map_incr n = Map.update ~f:(Option.value_map ~default:n ~f:(( + ) n)) in
