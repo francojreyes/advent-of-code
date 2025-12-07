@@ -65,3 +65,4 @@
 - **Day 04: [Printing Department](https://adventofcode.com/2025/day/4)** solved in OCaml
 - **Day 05: [Cafeteria](https://adventofcode.com/2025/day/5)** solved in OCaml
 - **Day 06: [Trash Compactor](https://adventofcode.com/2025/day/6)** solved in OCaml
+- **Day 06: [Laboratories](https://adventofcode.com/2025/day/7)** solved in OCaml

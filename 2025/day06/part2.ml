@@ -5,10 +5,8 @@ let solve = function
   | ('+', nums) -> List.fold nums ~init:0 ~f:( + )
   | _ -> 0
 
-let trim_and_join column = 
-  List.rev column
-  |> List.filter ~f:(Fn.non Char.is_whitespace)
-  |> String.of_list
+let num_of_column column = 
+  List.rev column |> String.of_list |> String.strip
 
 (** Like [String.split] for lists, but doesn't leave empty lists *)
 let list_split list ~on ~equal =
@@ -28,7 +26,7 @@ let () =
   let nums = 
     List.tl_exn reversed_input_lines
     |> List.transpose_exn
-    |> List.map ~f:trim_and_join
+    |> List.map ~f:num_of_column
     |> list_split ~on:"" ~equal:String.equal
     |> List.map ~f:(List.map ~f:Int.of_string)
   in
