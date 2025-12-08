@@ -6,6 +6,7 @@
 **/part2
 **/solution
 **/*.dSYM
+**/a.out
 
 # Java stuff
 **/*.class
