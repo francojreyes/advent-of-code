@@ -67,3 +67,6 @@
 - **Day 06: [Trash Compactor](https://adventofcode.com/2025/day/6)** solved in OCaml
 - **Day 07: [Laboratories](https://adventofcode.com/2025/day/7)** solved in OCaml
 - **Day 08: [Playground](https://adventofcode.com/2025/day/8)** solved in C++
+- **Day 09: [Movie Theatre](https://adventofcode.com/2025/day/9)** attempted in OCaml
+- **Day 10: [Factory](https://adventofcode.com/2025/day/10)** attempted in OCaml
+- **Day 11: [Reactor](https://adventofcode.com/2025/day/11)** solved in OCaml
